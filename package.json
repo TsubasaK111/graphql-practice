@@ -1,0 +1,28 @@
+{
+  "name": "graphql-practice",
+  "version": "1.0.0",
+  "description": "GraphQL meetup",
+  "author": "Tsubasa Kondo <>",
+  "scripts": {
+    "dev": "nodemon --watch server server/index.js",
+    "start": "node server/index.js",
+    "lint": "eslint --fix --ext .js .",
+    "precommit": "pretty-quick --staged"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-problems": "^0.1.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "husky": "^0.14.3",
+    "nodemon": "^1.17.5",
+    "prettier": "^1.12.1",
+    "pretty-quick": "^1.6.0"
+  },
+  "license": "MIT"
+}
