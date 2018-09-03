@@ -7,7 +7,7 @@ const data = require("./data/pokemon.js");
 // The schema should model the full data object available.
 const schema = buildSchema(`
   type Pokemon {
-    id: ID!
+    id: String!
     name: String!
     classification: String
     types: [PokemonType]
@@ -81,15 +81,16 @@ const schema = buildSchema(`
 
 
   input PokemonInput {
-    id: ID
+    id: String
     name: String!
     classification: String
   }
 
 
   type Mutation {
-    createPokemon(input: PokemonInput): Pokemon
-    updatePokemon(id: ID!, input: PokemonInput): Pokemon
+    CreatePokemon(input: PokemonInput): Pokemon
+    UpdatePokemon(id: String!, input: PokemonInput): Pokemon
+    DeletePokemon(id: String): [Pokemon]
   }
 `);
 
@@ -138,13 +139,30 @@ const root = {
       }, [])
       .find((attacks) => attacks.name === request.name);
   },
-  createPokemon: (request) => {
+  CreatePokemon: (request) => {
     data.push({
       id: request.input.id,
       name: request.input.name,
       classification: request.input.classification,
     });
     console.log(request.input.id);
+  },
+  UpdatePokemon: (request) => {
+    console.log(request);
+    const i = data.findIndex((pokemon) => pokemon.id === request.id);
+
+    data[i] = {
+      ...data[i],
+      ...request.input,
+    };
+
+    console.log(data[i]);
+    return data.find((pokemon) => pokemon.id === request.id);
+  },
+  DeletePokemon: (request) => {
+    const i = data.findIndex((pokemon) => pokemon.id === request.id);
+    data.splice(i, 1);
+    return data;
   },
 };
 
